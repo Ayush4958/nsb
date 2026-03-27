@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSB | Documentation Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .docs-container { max-width: 900px; margin: 8rem auto 4rem; padding: 2rem; background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: 8px;}
+        .docs-container h1 { font-size: 3rem; margin-bottom: 2rem; border-bottom: 2px solid var(--neon-cyan); padding-bottom: 1rem; color: var(--text-main); }
+        .docs-container h2 { font-size: 2rem; margin-top: 3rem; margin-bottom: 1.5rem; color: var(--neon-purple); }
+        .docs-container h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-main); }
+        .docs-container p { color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; }
+        .code-block { background: var(--bg-void); border: 1px solid var(--border-dim); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; overflow-x: auto; }
+        .code-block code { color: #4ade80; font-family: monospace; font-size: 0.9rem; }
+        .inline-code { background: rgba(255,255,255,0.05); padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--neon-cyan); font-family: monospace; font-size: 0.9rem;}
+    </style>
+</head>
+<body>
+    <div class="noise-overlay"></div>
+    <div class="cyber-grid"></div>
+
+    <header class="navbar">
+        <div class="nav-content">
+            <div class="brand">
+                <a href="index.html" style="text-decoration:none;"><div class="brand-glitch" data-text="NSB">NSB</div></a>
+            </div>
+            <nav class="links">
+                <a href="index.html">Home</a>
+                <a href="#" class="btn-outline">Documentation</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="docs-container">
+            <h1><strong>nsb</strong> – the network simulation bridge</h1>
+
+<table border="0">
+  <tr>
+    <td width="30%" valign="top">
+      <img src="media/logo.png" alt="NSB written in lowercase with a red-orange suspension bridge emerging from the top and a banana slug on the 'b'" title="NSB unofficial logo" width="100%">
+    </td>
+    <td width="70%">
+      <em>This tool is in beta and your feedback is greatly appreciated.</em>
+      <p>
+        The Network Simulation Bridge, or NSB for short, a simple, low-overhead pipeline
+        consisting of a message server and client interface libraries that bridge 
+        together applications and network simulators. NSB is application-, network 
+        simulator-, and platform-agnostic that allows developers to integrate any 
+        application front-end with any network simulator back-end.
+      </p>
+      <p>
+        For more information, or to cite NSB, you can access our 
+        <a href="https://dl.acm.org/doi/10.1145/3616391.3622771">publication</a>.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<h2>Contact & Collaborate</h2>
+
+NSB was first created to address real research needs at the <a href="https://inrg.engineering.ucsc.edu/" class="link-cyan">Inter-Networking Research Group</a> at the University of California, Santa Cruz. The first <a href="https://dl.acm.org/doi/abs/10.1145/3616391.3622771" class="link-cyan">proofs-of-concept</a> that leveraged NSB included decentralized federated learning and autonomous vehicle platooning. While core development is active as of February 2026, we invite collaborators and users to help us in that process and to develop domain-specific and/or usage-specific solutions.
+
+<a href="mailto:hkuttive@ucsc.edu" class="link-cyan">✉️ _<strong>Contact us via email!</strong>_</a> We look forward to helping you, hearing your feedback, or collaborating with you to make your network co-simulation successful.
+
+<strong>Interested in using NSB to model your connected systems? Looking for features not currently implemented?</strong> NSB was made to be extensible, but to identify what features we extend NSB with, we need to have motivating use cases. We'd love to work with new users/contributors to build simulation solutions together.
+
+<strong>Working specifically on autonomous vehicles system modeling?</strong> This project was co-created in part to model the network behind vehicle-to-vehicle (V2V) networking for autonomous vehicles (AVs). We are currently searching for users/collaborators to let us know what they'd like to see in terms of more support for AV applications and V2V and V2X network simulations.
+
+<h2>Installation</h2>
+
+<h3>Prerequisites</h3>
+
+The following software packages are required to be installed:
+* <strong>CMake</strong>, used to configure and build the project
+* _<strong>Pkg-Config</strong>_, necessary in MacOS for package configuration
+* <strong>Redis</strong>, whose server is used as a database to store payloads
+* <strong>Abseil</strong>, necessary for Protobuf support and logging
+* <strong>Protobuf</strong>, used to define and compile
+* <strong>YAML parsing</strong>, to parse configuration files
+* <strong>hiredis</strong>, to connect to the Redis server
+
+Python API support involves additional package installation through its
+<a href="python/requirements.txt" class="link-cyan">_requirements.txt_</a> file and is detailed in the 
+<a href="python/README.md" class="link-cyan">Python README</a>.
+
+Platform-specific package install commands are provided below. Also, note that
+previous installations of tools like _gRPC_ that include _protobuf_ may result
+in conflicting versions for _protobuf_.
+
+#### MacOS via Homebrew
+<div class="code-block"><pre><code>
+brew install cmake pkg-config abseil protobuf yaml-cpp redis hiredis
+</code></pre></div>
+
+
+
+<h3>Build</h3>
+__Cmake__ is used to build this project. In order to build the NSB components
+(the NSB Daemon executable and the C++ and Python client libraries), create a 
+_build_ (<div class="code-block"><pre><code>mkdir build</code></pre></div>) directory at the top level of this project 
+directory, such that your directory now looks like this:
+
+<div class="code-block"><pre><code>
+nsb/
+├── build/
+├── proto/
+├── python/
+├── cpp/
+├── CMakeLists.txt
+├── config.yaml
+└── README.md
+</code></pre></div>
+
+Then, enter the new _build_ directory (<div class="code-block"><pre><code>cd build</code></pre></div>) and start by configuring 
+the _CMake_ build:
+<div class="code-block"><pre><code>cmake ..</code></pre></div>
+
+Within the output, you should see something like this:
+<div class="code-block"><pre><code>shell
+[cmake] -- Checking target libraries:
+[cmake] -- ✓ Found target: yaml-cpp::yaml-cpp
+[cmake] -- ✓ Found target: protobuf::libprotobuf
+[cmake] -- ✓ Found target: absl::base
+[cmake] -- ✓ Found target: absl::log
+[cmake] -- ✓ Found target: absl::time
+[cmake] -- ✓ Found target: absl::log_internal_check_op
+[cmake] -- ✓ Found target: absl::log_initialize
+[cmake] -- ✓ Found target: PkgConfig::hiredis
+</code></pre></div>
+If all the prerequisite software was installed, you may continue with building 
+and installing NSB.
+<div class="code-block"><pre><code>shell
+cmake --build . --clean-first
+</code></pre></div>
+<div class="code-block"><pre><code>shell
+cmake --install .
+</code></pre></div>
+The library, includes, and binary directories should now be available under
+<div class="code-block"><pre><code>[your/install/path]/nsb</code></pre></div>. The install command will also make NSB available 
+on _pkg-config_ as <div class="code-block"><pre><code>nsb</code></pre></div>, which may be of use when compiling projects with 
+NSB. The <strong>NSB Daemon</strong> executable used to run NSB can be found at 
+<div class="code-block"><pre><code>[your/install/path]/nsb/bin/nsb_daemon</code></pre></div>.
+
+<h3>Uninstallation</h3>
+
+Uninstallation of packages from your install path is simple. You can either:
+* Delete the <div class="code-block"><pre><code>nsb</code></pre></div> directory from your install path to remove installed files
+and delete <div class="code-block"><pre><code>lib/pkgconfig/nsb.pc</code></pre></div> from your install path to remove the 
+_pkg-config_ index; or
+* Delete all files listed in the install manifest within
+the project <div class="code-block"><pre><code>build</code></pre></div> directory (<div class="code-block"><pre><code>xargs rm < install_manifest.txt</code></pre></div>).
+
+Then, you may delete the <div class="code-block"><pre><code>build</code></pre></div> directory to remove the built project.
+
+#### Windows via vcpkg
+_Coming soon._
+
+#### Linux
+
+_Check the <a href="linux-setup-guide.md" class="link-cyan">Linux-specific instructions</a>._
+
+<h2>Basic Usage</h2>
+
+<h3>Programming Interface</h3>
+
+Currently, we support and provide interfaces for <a href="python/README.md" class="link-cyan">Python</a> and 
+<a href="cpp/README.md" class="link-cyan">C++</a>. These interfaces have a high level of feature parity, and
+we aim to keep it that way. The language-specific READMEs contain more detail 
+and the documents contain detailed API manuals.
+
+The <strong>NSB Daemon</strong> serves as the bridge between the application space and the 
+network simulator space and runs from its compiled binary. NSB provides two main
+interfaces – the <strong>NSB Application Client</strong> (<code class="inline-code">NsbAppClient</code>) and the 
+<strong>NSB Simulator Client</strong> (<code class="inline-code">NsbSimClient</code>) – two connect the bridge between 
+the application and simulator, respectively.
+
+In Python, the client interfaces are available via *nsb_client.py* which you 
+must import. We recommend copying the contents of the <a href="python/" class="link-cyan">_python_</a> 
+directory, including the _proto_ folder, to your Python workspace.
+<div class="code-block"><pre><code>python
+import nsb_client as nsb
+</code></pre></div>
+In C++, the installed _libnsb.dylib_ comes with two headers – _nsb.h_ and 
+*nsb_client.h* – under the <code class="inline-code">nsb</code> namespace. Including *nsb_client.h* will give 
+you access to the client interfaces while *nsb.h* will provide access to more 
+general NSB logic.
+<div class="code-block"><pre><code>cpp
+#include "nsb.h"
+#include "nsb_client.h"
+</code></pre></div>
+
+#### Adding NSB in Projects
+
+To integrate NSB into your projects, you may need to add NSB to your project 
+and/or compile your project with NSB. To add NSB into your Python project, 
+follow the <a href="python/README.md" class="link-cyan">Python instructions</a>. To compile your C++ project
+with NSB, follow the <a href="cpp/README.md" class="link-cyan">C++ instructions</a>.
+
+#### <code class="inline-code">NSBAppClient</code> Interface
+
+The <strong>NSB Application Client</strong> provides an interface to your application and 
+presents as a simplified version of traditional network interfaces. The 
+application client can be created via its constructor. The <code class="inline-code">send</code> method sends a
+payload to a target destination via NSB. The <code class="inline-code">receive</code> method receives incoming 
+payloads via NSB. The <code class="inline-code">listen</code> method (not yet implemented in C++, sorry) is an 
+asynchronous reception of incoming messages. 
+
+In Python:
+<div class="code-block"><pre><code>python
+nsb_app = nsb.NSBAppClient("node0", "127.0.0.1", 65432)
+
+...
+
+<h1>Send a payload.</h1>
+outgoing_payload = b"Hello world!"
+nsb_app.send("node1", payload)
+
+...
+
+<h1>Receive a payload.</h1>
+incoming_payload = nsb_app.receive() # Returns None if nothing was received.
+if incoming_payload:
+    # Process the incoming payload.
+    ...
+
+    # You can access the payload properties.
+    print(f"Source: {incoming_payload.source}\n" + \
+          f"Destination: {incoming_payload.destination}\n" + \
+          f"Payload Size: {incoming_payload.payload_size}\n" + \
+          f"Payload: {incoming_payload.payload}\n")
+
+</code></pre></div>
+In C++:
+<div class="code-block"><pre><code>cpp
+...
+
+const std::string client_id = "node0";
+std::string daemon_address = "127.0.0.1";
+int daemon_port = 65432;
+nsb::NSBAppClient nsbApp = nsb::NSBAppClient(std::string("node0"), daemon_address, daemon_port);
+
+// Send a payload.
+std::string outgoing_payload = "Hello World!";
+nsb_app.send(std::string("node1"), outgoing_payload);
+
+...
+
+// Receive a payload.
+nsb::MessageEntry incoming_payload = nsbApp.receive()
+if (incoming_payload.exists()) {
+    // Process the incoming payload.
+    ...
+
+    // You can access the payload properties.
+    std::cout << "Source: << incoming_payload.source\n" <<
+          "Destination: << incoming_payload.destination\n" <<
+          "Payload Size: << incoming_payload.payload_size\n" <<
+          "Payload: << incoming_payload.payload\n" << std::endl;
+}
+</code></pre></div>
+
+#### <code class="inline-code">NSBSimClient</code> Interface
+
+The <strong>NSB Simulator Client</strong> provides an interface to your network simulator 
+that contains methods to fetch payloads to be routed through the simulated 
+network and to post payloads when they have completed their journey through the
+simulated network. The application client can be created via its constructor. 
+The <code class="inline-code">fetch</code> method checks and fetches payloads that were sent and are to be 
+transmitted over the simulated network. The <code class="inline-code">post</code> method is used when a payload
+arrives at the destination node in the simulated network to allow the payload to
+be received at the receiving application client.
+
+In Python:
+<div class="code-block"><pre><code>python
+nsb_app = nsb.NSBSimClient("node0", "127.0.0.1", 65432)
+
+...
+
+<h1>Fetch payload.</h1>
+payload_to_transmit = nsb_app.fetch()
+if payload_to_transmit: # Returns None if nothing was received.
+    # You can access the payload properties.
+    print(f"Source: {payload_to_transmit.source}\n" + \
+          f"Destination: {payload_to_transmit.destination}\n" + \
+          f"Payload Size: {payload_to_transmit.payload_size}\n" + \
+          f"Payload: {payload_to_transmit.payload}\n")
+
+    # Send over simulated network.
+    ...
+
+...
+
+<h1>Process the arrived payload from src_id to dest_id.</h1>
+nsb_app.post(payload, src_id, dest_id)
+
+</code></pre></div>
+In C++:
+<div class="code-block"><pre><code>cpp
+...
+
+std::string daemon_address = "127.0.0.1";
+int daemon_port = 65432;
+nsb::NSBSimClient nsbApp = nsb::NSBSimClient(std::string("node0"), daemon_address, daemon_port);
+
+// Fetch payload.
+MessageEntry payloadToTransmit = nsbApp.fetch();
+if (payloadToTransmit.exists()) {
+    // You can access the payload properties.
+    std::cout << "Source: << payloadToTransmit.source\n" <<
+          "Destination: << payloadToTransmit.destination\n" <<
+          "Payload Size: << payloadToTransmit.payload_size\n" <<
+          "Payload: << payloadToTransmit.payload\n" << std::endl;
+    // Send over simulated network.
+    ...
+
+}
+
+...
+
+// Process the arrived payload from src_id to dest_id.
+nsb_app.post(payload, src_id, dest_id);
+</code></pre></div>
+
+<h3>System Configuration</h3>
+
+The system configuration can be done within a YAML file. An example is provided 
+in <a href="config.yaml" class="link-cyan">_config.yaml_</a> for your convenience. We provide a few different
+modes of operation.
+
+The <strong>system mode** (<code class="inline-code">system</code>→<code class="inline-code">mode</code>) can be set to either **PULL</strong> (0) or 
+<strong>PUSH</strong> (1) mode.
+* In <strong>PULL</strong> mode, the NSB clients will poll the daemon server to fetch or 
+receive messages. This is recommended for most configurations.
+* In <strong>PUSH</strong> mode, the NSB daemon server will automatically forward sent and 
+posted messages to the receiving clients, such that they can be readily received
+or fetched without making a request to the server. This achieves better latency 
+but may not work with all user device, program, and network configurations.
+
+The <strong>simulator mode</strong> (<code class="inline-code">system</code>→<code class="inline-code">sim_mode</code>) can be set to either
+<strong>System-Wide** (0) or **Per-Node</strong> (1) mode.
+* In <strong>System-Wide</strong> mode, it is assumed that there will only be one simulator 
+client and creating multiple simulator clients will not be allowed. The 
+simulator client will fetch all payloads to be transmitted. This is good for 
+top-down network simulator implementations like __ns-3__.
+* In <strong>Per-Node</strong> mode, it is assumed that each node in your network will have a
+respective simulator client. These simulator clients must have the same 
+identifier as their co-related application client, so that when an 
+<code class="inline-code">NSBAppClient</code> with identifier <code class="inline-code">"node0"</code> sends a payload, it will be fetched by 
+its corresponding <code class="inline-code">NSBSimClient</code> with identifier <code class="inline-code">"node0"</code>, and vice-versa with 
+posting and receiving payloads. This is good for bottom-up network simulator 
+implementations like __OMNeT++__.
+
+<h3>Running Your System</h3>
+
+These instructions assume you have already implemented the client-side APIs in
+your code. Once this is complete, we recommend taking these steps in order:
+
+1. <strong>Start the Redis server.</strong> Specify or take note of the port number that the
+server is running on and make sure your configuration file points to the address
+and port.
+<div class="code-block"><pre><code>redis-server -p 5050</code></pre></div>
+
+2. <strong>Start the NSB Daemon.</strong> If you followed the build instructions in above, 
+then you can start the NSB Daemon executable from either the _build_ directory
+or via install path, with that target configuration file: 
+<div class="code-block"><pre><code>
+./build/nsb_daemon config.yaml
+</code></pre></div>
+<div class="code-block"><pre><code>
+/[your/install/path]/nsb/bin/nsb_daemon config.yaml
+</code></pre></div>
+
+3. <strong>Start the modified network simulator.</strong> In most cases, the simulator, 
+modified using the _NSBSimClient_ API, should be started before the application
+in order to be ready and listening for messages from the application space.
+
+4. <strong>Run your modified application.</strong> Using the _NSBAppClient_ API, your 
+application(s) should now be able to send messages via NSB over the simulated 
+network.
+
+<h2>Extensibility</h2>
+_Coming soon._
+
+<h2>_Acknowledgments_</h2>
+
+We would like to thank the development team (all Ph.D., M.S., and undergraduate 
+students, past and present) who have worked on this version and past versions of
+NSB. We would also like to thank the Open Source Program Office (OSPO) in the 
+Center for Research in Open Source Systems (CROSS) at the University of 
+California, Santa Cruz, for their guidance in evolving NSB into an open-source
+ecosystem.
+
+<h2>_License -- BSD_</h2>
+Copyright 2026 UC Santa Cruz
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="brand-col">
+                <div class="brand-glitch small">NSB</div>
+                <p class="muted">Synced via Automated Pipeline.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
