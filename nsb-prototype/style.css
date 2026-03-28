@@ -16,6 +16,20 @@
     --font-body: 'DM Sans', sans-serif;
 }
 
+/* ACCESSIBILITY & PREFERS REDUCED MOTION */
+*:focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 2px; border-radius: 2px; z-index: 100; position: relative;}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .packet { display: none; } /* Hide packets if animation is disabled to avoid confusion */
+    .card-glow { filter: none; opacity: 0.05; }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -421,6 +435,15 @@ button {
     flex-direction: column;
     gap: 0.5rem;
 }
+
+/* INTEGRATION GALLERY */
+.integrations { max-width: 1400px; margin: 4rem auto 8rem; padding: 0 2rem; }
+.integrations-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; font-family: var(--font-heading); letter-spacing: 2px; }
+.integrations-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+.int-tag { padding: 1.5rem 3rem; background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: 8px; font-weight: 700; font-family: var(--font-heading); font-size: 1.5rem; letter-spacing: 1px; color: var(--text-muted); transition: all 0.3s; position: relative; overflow: hidden; cursor: default; }
+.int-tag::before { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); transition: left 0.5s; }
+.int-tag:hover { border-color: var(--neon-cyan); color: #fff; box-shadow: 0 4px 20px rgba(0,240,255,0.1); transform: translateY(-3px); }
+.int-tag:hover::before { left: 150%; }
 
 /* PERSONAS */
 .personas {

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReceive = document.getElementById('btn-receive');
     const btnFetch = document.getElementById('btn-fetch');
     const btnPost = document.getElementById('btn-post');
+    const btnReset = document.getElementById('btn-reset');
 
     const txCountEl = document.getElementById('tx-count');
     const rxCountEl = document.getElementById('rx-count');
@@ -118,6 +119,36 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             logToTerminal(`APP_CLIENT: Received successfully delivered routed payload.`);
         }, 600);
+    });
+
+    // Step 5: Reset Simulator
+    btnReset.addEventListener('click', () => {
+        // Reset state
+        txQueue = 0;
+        rxQueue = 0;
+        txCountEl.textContent = '0';
+        rxCountEl.textContent = '0';
+
+        // Clear terminal but keep start logs
+        terminal.innerHTML = `<div>[00:00:00] NSBDaemon started on port 65432.</div>
+                              <div>[00:00:00] Listening for client operations...</div>`;
+
+        // Reset Buttons
+        btnSend.classList.remove('disabled');
+        btnSend.disabled = false;
+        btnFetch.classList.add('disabled');
+        btnFetch.disabled = true;
+        btnPost.classList.add('disabled');
+        btnPost.disabled = true;
+        btnReceive.classList.add('disabled');
+        btnReceive.disabled = true;
+
+        // Reset animations
+        [packet1, packet2, packet3, packet4].forEach(p => {
+            p.classList.remove('anim-right', 'anim-left');
+        });
+
+        logToTerminal(`DAEMON: Simulator state reset. Matrices cleared.`);
     });
 
 });

@@ -23,10 +23,10 @@
                 <span class="sr-only">NSB</span>
                 <div class="brand-glitch" data-text="NSB">NSB</div>
             </div>
-            <nav class="links">
-                <a href="#architecture">Architecture</a>
-                <a href="#ecosystem">Ecosystem</a>
-                <a href="#docs" class="btn-outline">Documentation</a>
+            <nav class="links" aria-label="Main Navigation">
+                <a href="#architecture" aria-label="Explore Architecture">Architecture</a>
+                <a href="#ecosystem" aria-label="View Ecosystem Personas">Ecosystem</a>
+                <a href="docs.html" class="btn-outline" aria-label="Read Documentation">Documentation</a>
             </nav>
         </div>
     </header>
@@ -91,9 +91,12 @@
                         <span class="lang-tag">Core Broker</span>
                     </div>
                     <div class="node-body">
-                        <div class="queue-monitor">
+                        <div class="queue-monitor" aria-live="polite">
                             <span>TX QUEUE: <span id="tx-count">0</span></span>
                             <span>RX QUEUE: <span id="rx-count">0</span></span>
+                        </div>
+                        <div class="controls" style="margin-top: 1.5rem;">
+                             <button id="btn-reset" class="act-btn" aria-label="Reset Routing Animation" style="width:100%">RESET SIMULATOR</button>
                         </div>
                     </div>
                     <!-- Connection Line Daemon -> Sim -->
@@ -129,6 +132,18 @@
                     <div>[00:00:00] NSBDaemon started on port 65432.</div>
                     <div>[00:00:00] Listening for client operations...</div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Integrations Gallery -->
+        <section class="integrations">
+            <h2 class="integrations-title">SUPPORTED ECOSYSTEMS</h2>
+            <div class="integrations-grid" role="list">
+                <div class="int-tag" role="listitem">ns-3</div>
+                <div class="int-tag" role="listitem">OMNeT++</div>
+                <div class="int-tag" role="listitem">C++ SDK</div>
+                <div class="int-tag" role="listitem">Python Client</div>
+                <div class="int-tag" role="listitem" style="border-color: var(--neon-purple); color: #fff;">RabbitMQ Broker</div>
             </div>
         </section>
 
