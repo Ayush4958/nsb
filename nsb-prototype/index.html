@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,22 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    
-    <!-- Noise overlay for texture -->
-    <div class="noise-overlay"></div>
-    
-    <!-- Background Grid -->
-    <div class="cyber-grid"></div>
 
     <header class="navbar">
         <div class="nav-content">
             <div class="brand">
-                <span class="sr-only">NSB</span>
-                <div class="brand-glitch" data-text="NSB">NSB</div>
+                <div class="brand-glitch" aria-hidden="true">NSB</div>
             </div>
             <nav class="links" aria-label="Main Navigation">
-                <a href="#architecture" aria-label="Explore Architecture">Architecture</a>
-                <a href="#ecosystem" aria-label="View Ecosystem Personas">Ecosystem</a>
+                <a href="#about" aria-label="For End Users">End-Users</a>
+                <a href="#architecture" aria-label="Explore Architecture">Engine Demo</a>
+                <a href="#contributor" aria-label="For OS Contributors">Contributors</a>
                 <a href="docs.html" class="btn-outline" aria-label="Read Documentation">Documentation</a>
             </nav>
         </div>
@@ -38,32 +36,55 @@
                     <div class="status-dot"></div>
                     <span class="tech-badge">NSF POSE Ecosystem Transition Phase</span>
                 </div>
-                
+
                 <h1 class="title">
                     <span class="text-cyan">CO-SIMULATION.</span><br>
                     <span class="text-purple">UNLEASHED.</span>
                 </h1>
-                
+
                 <p class="subtitle">
-                    The platform-, application-, and simulator-agnostic bridge. Route real-time application payloads through high-fidelity network models without altering your core stack.
+                    The platform-, application-, and simulator-agnostic bridge. Route real-time application payloads
+                    through high-fidelity network models without altering your core stack.
                 </p>
 
                 <div class="cta-group">
-                    <button class="btn-primary" onclick="document.getElementById('architecture').scrollIntoView()">Explore Architecture</button>
-                    <button class="btn-secondary">View Repository</button>
+                    <button class="btn-primary" onclick="document.getElementById('about').scrollIntoView()">Start as
+                        User</button>
+                    <button class="btn-secondary"
+                        onclick="document.getElementById('architecture').scrollIntoView()">Explore Routing
+                        Engine</button>
                 </div>
+            </div>
+        </section>
+
+        <!-- Scaffolded Personas: User First -->
+        <section id="about" class="personas">
+            <div class="persona-card user">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                        </path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <h3>For End-Users & Researchers</h3>
+                <p>Prototype decentralized fed-learning, AV platooning, and IoT meshes on validated simulators. Abstract
+                    away the network model logic while writing your application code exactly as you would natively.</p>
+                <a href="docs.html" class="link-cyan">Read the Quickstart <span class="arrow">→</span></a>
             </div>
         </section>
 
         <!-- Interactive Architecture Section -->
         <section id="architecture" class="interactive-arch">
             <div class="section-title">
-                <h2>THE ROUTING <br>ENGINE</h2>
-                <p>Interactive demonstration of PULL Mode payload routing.</p>
+                <h2>THE ROUTING ENGINE</h2>
+                <p>Interactive demonstration of PULL Mode payload routing across isolated processes.</p>
             </div>
 
             <div class="bridge-container">
-                
+
                 <!-- Client Side -->
                 <div class="arch-node app-node">
                     <div class="node-header">
@@ -73,8 +94,10 @@
                     <div class="node-body">
                         <p>User Application Space</p>
                         <div class="controls">
-                            <button id="btn-send" class="act-btn cyan-btn">SEND()</button>
-                            <button id="btn-receive" class="act-btn cyan-btn disabled" disabled>RECEIVE()</button>
+                            <button id="btn-send" class="act-btn cyan-btn"
+                                aria-label="Simulate application send command">SEND()</button>
+                            <button id="btn-receive" class="act-btn cyan-btn disabled" disabled
+                                aria-label="Simulate application receive command">RECEIVE()</button>
                         </div>
                     </div>
                     <!-- Connection Line App -> Daemon -->
@@ -96,7 +119,8 @@
                             <span>RX QUEUE: <span id="rx-count">0</span></span>
                         </div>
                         <div class="controls" style="margin-top: 1.5rem;">
-                             <button id="btn-reset" class="act-btn" aria-label="Reset Routing Animation" style="width:100%">RESET SIMULATOR</button>
+                            <button id="btn-reset" class="act-btn" aria-label="Reset Routing Animation"
+                                style="width:100%">RESET SIMULATOR</button>
                         </div>
                     </div>
                     <!-- Connection Line Daemon -> Sim -->
@@ -115,15 +139,17 @@
                     <div class="node-body">
                         <p>Network Simulation Space</p>
                         <div class="controls">
-                            <button id="btn-fetch" class="act-btn purple-btn disabled" disabled>FETCH()</button>
-                            <button id="btn-post" class="act-btn purple-btn disabled" disabled>POST()</button>
+                            <button id="btn-fetch" class="act-btn purple-btn disabled" disabled
+                                aria-label="Simulate network fetch command">FETCH()</button>
+                            <button id="btn-post" class="act-btn purple-btn disabled" disabled
+                                aria-label="Simulate network post command">POST()</button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="log-terminal">
+            <div class="log-terminal" aria-hidden="true">
                 <div class="term-header">
                     <div class="term-dots"><span></span><span></span><span></span></div>
                     <div class="term-title">daemon.log</div>
@@ -143,43 +169,35 @@
                 <div class="int-tag" role="listitem">OMNeT++</div>
                 <div class="int-tag" role="listitem">C++ SDK</div>
                 <div class="int-tag" role="listitem">Python Client</div>
-                <div class="int-tag" role="listitem" style="border-color: var(--neon-purple); color: #fff;">RabbitMQ Broker</div>
+                <div class="int-tag" role="listitem">RabbitMQ</div>
             </div>
         </section>
 
-        <!-- Dual Persona Section -->
-        <section id="ecosystem" class="personas">
-            <div class="persona-card user">
-                <div class="card-glow cyan-glow"></div>
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                </div>
-                <h3>For Researchers</h3>
-                <p>Prototype decentralized fed-learning, AV platooning, and IoT meshes on validated simulators. Don't build network models from scratch.</p>
-                <a href="#docs" class="link-cyan">Read Quickstart <span class="arrow">→</span></a>
-            </div>
-
+        <!-- Scaffolded Personas: Contributor Deep Dive -->
+        <section id="contributor" class="personas" style="padding-top: 2rem;">
             <div class="persona-card contributor">
-                <div class="card-glow purple-glow"></div>
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                <div class="icon-wrapper-contributor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
                 </div>
                 <h3>For OS Contributors</h3>
-                <p>Extend NSB's modular C++ daemon. Hack on RabbitMQ integrations, QoS priority queues, and advanced routing topologies.</p>
-                <a href="#contribute" class="link-purple">Architecture Guide <span class="arrow">→</span></a>
+                <p>Extend NSB's modular C++ daemon. Hack on message broker integrations, QoS priority queues, and
+                    advanced routing topologies. We welcome open-source contributions from networking engineers,
+                    researchers, and systems developers looking to expand the simulator plugin ecosystem.</p>
+                <a href="#contributor" class="link-purple">Explore Architecture Guide <span class="arrow">→</span></a>
             </div>
         </section>
+
     </main>
 
     <footer>
-        <div class="footer-grid">
-            <div class="brand-col">
-                <div class="brand-glitch small">NSB</div>
-                <p class="muted">Supported by the Inter-Networking Research Group & UCSC OSPO.</p>
-            </div>
-        </div>
+        <div class="brand-glitch small" aria-hidden="true">NSB</div>
+        <p class="muted">Supported by the Inter-Networking Research Group & UCSC OSPO.</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>
